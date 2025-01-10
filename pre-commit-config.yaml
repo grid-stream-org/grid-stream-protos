@@ -1,0 +1,22 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+
+  - repo: local
+    hooks:
+      - id: proto-gen
+        name: Generate Proto
+        entry: make generate
+        language: system
+        pass_filenames: false
+        types: [proto]
+
+  - repo: https://github.com/bufbuild/buf
+    rev: v1.28.0
+    hooks:
+      - id: buf-lint
+      - id: buf-format
