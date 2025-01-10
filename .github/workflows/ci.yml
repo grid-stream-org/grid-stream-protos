@@ -11,18 +11,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
-          go-versions: '1.21'
-          
+          go-version: '1.21'
+
       - name: Install buf
         uses: bufbuild/buf-setup-action@v1
 
       - name: Lint protos
         uses: bufbuild/buf-lint-action@v1
-        
+
       - name: Check breaking changes
         uses: bufbuild/buf-breaking-action@v1
         with:
@@ -30,11 +30,11 @@ jobs:
         if: github.event_name == 'pull_request'
 
       - name: Generate code
-        run: make generate
-        
+        uses: bufbuild/buf-generate-action@v1
+
       - name: Verify generated code is up to date
         run: |
           if [ -n "$(git status --porcelain)" ]; then
-            echo "Generated code is not up to date. Run 'make generate' locally"
+            echo "Generated code is not up to date. Run 'buf generate' locally"
             exit 1
           fi
