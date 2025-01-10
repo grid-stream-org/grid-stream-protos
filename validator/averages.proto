@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package validator;
+
+option go_package = "github.com/grid-stream-org/grid-stream-protos/gen/validator";
+
+message Average {
+  string project_id = 1;
+  double average_output = 2;
+  string timestamp = 3;
+}
+
+message ValidateRequest {
+  repeated Average averages = 1;
+}
+
+message ValidateResponse {
+  bool success = 1;
+  string message = 2;
+  repeated Error errors = 3;
+}
+
+message Error {
+  string project_id = 1;
+  string message = 2;
+}
+
+service ValidatorService {
+  rpc Validate(ValidateRequest) returns (ValidateResponse) {}
+}

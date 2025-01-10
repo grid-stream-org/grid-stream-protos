@@ -14,9 +14,3 @@ repos:
         language: system
         pass_filenames: false
         types: [proto]
-
-  - repo: https://github.com/bufbuild/buf
-    rev: v1.28.0
-    hooks:
-      - id: buf-lint
-      - id: buf-format
