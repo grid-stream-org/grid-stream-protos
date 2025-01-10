@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-package validator;
+package validator.v1;
 
-option go_package = "github.com/grid-stream-org/grid-stream-protos/gen/validator";
+option go_package = "github.com/grid-stream-org/grid-stream-protos/gen/validator/v1";
 
 message Average {
   string project_id = 1;
