@@ -7,10 +7,12 @@ on:
     branches: [ main ]
 
 jobs:
-  proto-lint:
+  buf-checks:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Go
         uses: actions/setup-go@v4
@@ -19,6 +21,11 @@ jobs:
 
       - name: Install buf
         uses: bufbuild/buf-setup-action@v1
+
+      - name: Install protoc plugins
+        run: |
+          go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+          go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
 
       - name: Lint protos
         uses: bufbuild/buf-lint-action@v1
@@ -30,11 +37,11 @@ jobs:
         if: github.event_name == 'pull_request'
 
       - name: Generate code
-        uses: bufbuild/buf-generate-action@v1
+        run: make generate
 
       - name: Verify generated code is up to date
         run: |
           if [ -n "$(git status --porcelain)" ]; then
-            echo "Generated code is not up to date. Run 'buf generate' locally"
+            echo "Generated code is not up to date. Run 'make generate' locally"
             exit 1
           fi
