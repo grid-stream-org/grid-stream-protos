@@ -1,0 +1,14 @@
+# Generated files
+gen/
+# Go files
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+go.work
+# IDEs
+.idea/
+.vscode/
