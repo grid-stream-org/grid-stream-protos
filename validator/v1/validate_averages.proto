@@ -4,23 +4,23 @@ package validator.v1;
 
 option go_package = "github.com/grid-stream-org/grid-stream-protos/gen/validator/v1";
 
-message Average {
+message AverageOutput {
   string project_id = 1;
   double average_output = 2;
   string timestamp = 3;
 }
 
 message ValidateRequest {
-  repeated Average averages = 1;
+  repeated AverageOutput average_outputs = 1;
 }
 
 message ValidateResponse {
   bool success = 1;
   string message = 2;
-  repeated Error errors = 3;
+  repeated ValidateError errors = 3;
 }
 
-message Error {
+message ValidateError {
   string project_id = 1;
   string message = 2;
 }
