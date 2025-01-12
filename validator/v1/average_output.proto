@@ -10,21 +10,21 @@ message AverageOutput {
   string timestamp = 3;
 }
 
-message ValidateRequest {
-  repeated AverageOutput average_outputs = 1;
+message ValidateAverageOutputsRequest {
+  repeated AverageOutput averages = 1;
 }
 
-message ValidateResponse {
+message ValidateAverageOutputsResponse {
   bool success = 1;
   string message = 2;
-  repeated ValidateError errors = 3;
+  repeated ValidationError errors = 3;
 }
 
-message ValidateError {
+message ValidationError {
   string project_id = 1;
   string message = 2;
 }
 
 service ValidatorService {
-  rpc Validate(ValidateRequest) returns (ValidateResponse) {}
+  rpc ValidateAverageOutputs(ValidateAverageOutputsRequest) returns (ValidateAverageOutputsResponse) {}
 }
