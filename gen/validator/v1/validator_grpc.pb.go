@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             (unknown)
-// source: validator/v1/average_output.proto
+// source: validator/v1/validator.proto
 
 package v1
 
@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	ValidatorService_ValidateAverageOutputs_FullMethodName = "/validator.v1.ValidatorService/ValidateAverageOutputs"
+	ValidatorService_NotifyProject_FullMethodName          = "/validator.v1.ValidatorService/NotifyProject"
 )
 
 // ValidatorServiceClient is the client API for ValidatorService service.
@@ -27,6 +28,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ValidatorServiceClient interface {
 	ValidateAverageOutputs(ctx context.Context, in *ValidateAverageOutputsRequest, opts ...grpc.CallOption) (*ValidateAverageOutputsResponse, error)
+	NotifyProject(ctx context.Context, in *NotifyProjectRequest, opts ...grpc.CallOption) (*NotifyProjectResponse, error)
 }
 
 type validatorServiceClient struct {
@@ -47,11 +49,22 @@ func (c *validatorServiceClient) ValidateAverageOutputs(ctx context.Context, in 
 	return out, nil
 }
 
+func (c *validatorServiceClient) NotifyProject(ctx context.Context, in *NotifyProjectRequest, opts ...grpc.CallOption) (*NotifyProjectResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(NotifyProjectResponse)
+	err := c.cc.Invoke(ctx, ValidatorService_NotifyProject_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ValidatorServiceServer is the server API for ValidatorService service.
 // All implementations must embed UnimplementedValidatorServiceServer
 // for forward compatibility.
 type ValidatorServiceServer interface {
 	ValidateAverageOutputs(context.Context, *ValidateAverageOutputsRequest) (*ValidateAverageOutputsResponse, error)
+	NotifyProject(context.Context, *NotifyProjectRequest) (*NotifyProjectResponse, error)
 	mustEmbedUnimplementedValidatorServiceServer()
 }
 
@@ -64,6 +77,9 @@ type UnimplementedValidatorServiceServer struct{}
 
 func (UnimplementedValidatorServiceServer) ValidateAverageOutputs(context.Context, *ValidateAverageOutputsRequest) (*ValidateAverageOutputsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ValidateAverageOutputs not implemented")
+}
+func (UnimplementedValidatorServiceServer) NotifyProject(context.Context, *NotifyProjectRequest) (*NotifyProjectResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method NotifyProject not implemented")
 }
 func (UnimplementedValidatorServiceServer) mustEmbedUnimplementedValidatorServiceServer() {}
 func (UnimplementedValidatorServiceServer) testEmbeddedByValue()                          {}
@@ -104,6 +120,24 @@ func _ValidatorService_ValidateAverageOutputs_Handler(srv interface{}, ctx conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ValidatorService_NotifyProject_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NotifyProjectRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ValidatorServiceServer).NotifyProject(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ValidatorService_NotifyProject_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ValidatorServiceServer).NotifyProject(ctx, req.(*NotifyProjectRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ValidatorService_ServiceDesc is the grpc.ServiceDesc for ValidatorService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -115,7 +149,11 @@ var ValidatorService_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "ValidateAverageOutputs",
 			Handler:    _ValidatorService_ValidateAverageOutputs_Handler,
 		},
+		{
+			MethodName: "NotifyProject",
+			Handler:    _ValidatorService_NotifyProject_Handler,
+		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "validator/v1/average_output.proto",
+	Metadata: "validator/v1/validator.proto",
 }
