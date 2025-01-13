@@ -1,4 +1,4 @@
-.PHONY: generate lint all
+.PHONY: generate lint clean all
 
 generate:
 	buf generate
@@ -6,4 +6,7 @@ generate:
 lint:
 	buf lint
 
-all: lint generate
+clean:
+	rm -rf gen/*
+
+all: lint clean generate
