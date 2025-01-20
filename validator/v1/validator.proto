@@ -6,9 +6,10 @@ option go_package = "github.com/grid-stream-org/grid-stream-protos/gen/validator
 
 message AverageOutput {
   string project_id = 1;
-  double average_output = 2;
-  string start_time = 3;
-  string end_time = 4;
+  double contract_threshold = 2;
+  double average_output = 3;
+  string start_time = 4;
+  string end_time = 5;
 }
 
 message ValidateAverageOutputsRequest {
