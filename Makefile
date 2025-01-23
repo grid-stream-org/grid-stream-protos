@@ -1,6 +1,6 @@
 .PHONY: generate lint clean all
 
-generate:
+generate: clean
 	buf generate
 
 lint:
