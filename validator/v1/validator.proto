@@ -18,6 +18,7 @@ message ValidateAverageOutputsRequest {
 
 message ValidateAverageOutputsResponse {
   bool success = 1;
+  bool not_valid = 2;
   repeated ValidationError errors = 3;
 }
 
@@ -26,21 +27,6 @@ message ValidationError {
   string message = 2;
 }
 
-message NotifyProjectRequest {
-  string project_id = 1;
-}
-
-message NotifyProjectResponse {
-  bool acknowledged = 1;
-  repeated NotifyProjectError errors = 2;
-}
-
-message NotifyProjectError {
-  string project_id = 1;
-  string message = 2;
-}
-
 service ValidatorService {
   rpc ValidateAverageOutputs(ValidateAverageOutputsRequest) returns (ValidateAverageOutputsResponse) {}
-  rpc NotifyProject(NotifyProjectRequest) returns (NotifyProjectResponse) {}
 }
