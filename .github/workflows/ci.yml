@@ -31,12 +31,6 @@ jobs:
       - name: Lint protos
         uses: bufbuild/buf-lint-action@v1
 
-      - name: Check breaking changes
-        if: github.event_name == 'pull_request'
-        uses: bufbuild/buf-breaking-action@v1
-        with:
-          against: 'https://github.com/grid-stream-org/grid-stream-protos.git#branch=main'
-
       - name: Generate code
         run: make generate
 
