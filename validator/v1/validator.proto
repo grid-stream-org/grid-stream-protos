@@ -40,7 +40,28 @@ message NotifyProjectError {
   string message = 2;
 }
 
+message GetValidationSummaryRequest {
+  string projectId = 1;
+}
+
+message GetValidationSummaryResponse {
+  string projectId = 1;
+  string generatedAt = 2;
+  int32 totalViolations = 3;
+  float averageOutput = 4;
+  float contractThreshold = 5;
+  repeated ValidationEntry entries = 6;
+}
+
+message ValidationEntry {
+  string timestamp = 1;
+  float average = 2;
+  float threshold = 3;
+  int32 violations = 4;
+}
+
 service ValidatorService {
   rpc ValidateAverageOutputs(ValidateAverageOutputsRequest) returns (ValidateAverageOutputsResponse) {}
   rpc NotifyProject(NotifyProjectRequest) returns (NotifyProjectResponse) {}
+  rpc GetValidationSummary(GetValidationSummaryRequest) returns (GetValidationSummaryResponse){}
 }
